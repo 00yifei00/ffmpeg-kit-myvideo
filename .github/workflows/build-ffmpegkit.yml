@@ -29,8 +29,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y git build-essential yasm pkg-config
 
       - name: Build FFmpegKit AAR  
-        run: |
-            # 只启用 arm64-v8a 架构，禁用其他
+        run:
           bash android.sh \
             --disable-arm-v7a \
             --disable-arm-v7a-neon \
@@ -38,7 +37,6 @@ jobs:
             --disable-x86-64 \
             --enable-lts \
             --api-level=21
-        
         
       - name: Upload AAR artifact
         uses: actions/upload-artifact@v4
