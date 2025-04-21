@@ -1,7 +1,7 @@
 name: Build FFmpegKit AAR
 
 on:
-  workflow_dispatch:     # 手动触发
+  workflow_dispatch:
   push:
     branches: [ main ]
 
@@ -9,25 +9,33 @@ jobs:
   build-android-aar:
     runs-on: ubuntu-latest
     env:
+      # 只声明静态 SDK 路径，移除对 steps 的引用
       ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
-      ANDROID_NDK_ROOT: ${{ steps.setup-ndk.outputs.ndk-path }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Android SDK & NDK
+      - name: Setup Android NDK
         uses: android-actions/setup-ndk@v2
+        id: setup-ndk
         with:
           ndk-version: '27.0.12077973'
+          link-to-sdk: true
+
+      - name: Export NDK path
+        run: echo "ANDROID_NDK_ROOT=${{ steps.setup-ndk.outputs.ndk-path }}" >> $GITHUB_ENV
+
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y git build-essential yasm pkg-config
 
       - name: Build FFmpegKit AAR
         run: |
-          export ANDROID_NDK_ROOT="${{ steps.setup-ndk.outputs.ndk-path }}"
           cd ffmpeg-kit-myvideo
-          bash android.sh --ffmpeg-extra-config="$EXTRA_CFG" \
-                          --disable-libraries --enable-libraries=""
+          bash android.sh \
+            --ffmpeg-extra-config="$EXTRA_CFG" \
+            --disable-libraries \
+            --enable-libraries=""
 
       - name: Upload AAR artifact
         uses: actions/upload-artifact@v3
