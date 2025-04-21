@@ -30,12 +30,12 @@ jobs:
 
       - name: Build FFmpegKit AAR
         run: |
-          cd ffmpeg-kit-myvideo
           bash android.sh \
             --ffmpeg-extra-config="$EXTRA_CFG" \
             --disable-libraries \
             --enable-libraries=""
-
+        
+        
       - name: Upload AAR artifact
         uses: actions/upload-artifact@v4
         with:
