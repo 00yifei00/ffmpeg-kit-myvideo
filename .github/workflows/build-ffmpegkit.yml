@@ -29,7 +29,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y git build-essential yasm pkg-config
 
       - name: Build FFmpegKit AAR
-        run: |
+        run:
           bash android.sh \
             --ffmpeg-extra-config="$EXTRA_CFG" \
             --disable-libraries \
