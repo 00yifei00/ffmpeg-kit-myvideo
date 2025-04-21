@@ -31,9 +31,11 @@ jobs:
       - name: Build FFmpegKit AAR
         run:
           bash android.sh \
-            --ffmpeg-extra-config="$EXTRA_CFG" \
-            --disable-libraries \
-            --enable-libraries=""
+              --enable-libmp3lame \     # 启用 MP3 编码
+              --enable-demuxer=matroska,mov \  # 启用 MKV 和 MP4 解封装
+              --enable-decoder=subrip,ass \    # 启用字幕解码
+              --disable-arm-v7a \       # 按需禁用不支持的架构
+              --disable-x86
         
       - name: Upload AAR artifact
         uses: actions/upload-artifact@v4
