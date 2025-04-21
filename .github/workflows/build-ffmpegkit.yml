@@ -37,7 +37,7 @@ jobs:
             --enable-libraries=""
 
       - name: Upload AAR artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ffmpeg-kit-myvideo-aar
           path: ffmpeg-kit-myvideo/prebuilt/bundle-android-aar/*.aar
