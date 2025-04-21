@@ -28,15 +28,12 @@ jobs:
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y git build-essential yasm pkg-config
 
-      - name: Build FFmpegKit AAR  
-        run:
+      - name: Build FFmpegKit AAR
+        run: |
           bash android.sh \
-            --disable-arm-v7a \
-            --disable-arm-v7a-neon \
-            --disable-x86 \
-            --disable-x86-64 \
-            --enable-lts \
-            --api-level=21
+            --ffmpeg-extra-config="$EXTRA_CFG" \
+            --disable-libraries \
+            --enable-libraries=""
         
       - name: Upload AAR artifact
         uses: actions/upload-artifact@v4
