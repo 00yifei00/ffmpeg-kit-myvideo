@@ -413,38 +413,6 @@ else
 fi
 
 ###################################################################
-#!/usr/bin/env bash
-set -e
-
-# 进入脚本所在目录
-cd "$(dirname "$0")"/..
-
-# 禁用所有组件
-EXTRA_CFG="--disable-everything"
-
-# 启用文件读/写协议
-EXTRA_CFG+=" --enable-protocol=file"
-
-# 启用容器/字幕解复用器：MP4(MOV)、Matroska(MKV)、SubRip(SRT)
-EXTRA_CFG+=" --enable-demuxer=mov,matroska,subrip"
-
-# 启用音频解码器 & 字幕解码器
-EXTRA_CFG+=" --enable-decoder=aac,mp3,srt,movtext"
-
-# 启用音频解析器（有助于某些流式格式）
-EXTRA_CFG+=" --enable-parser=aac,mp3"
-
-# 启用音频复用器（输出 WAV）与文本复用器（输出字幕文件）
-EXTRA_CFG+=" --enable-muxer=wav,data"
-
-# 启用 WAV 编码器与“复制”编码
-EXTRA_CFG+=" --enable-encoder=pcm_s16le,copy"
-
-# 将上述配置传递给 android.sh
-./android.sh \
-  --ffmpeg-extra-config="$EXTRA_CFG" \
-  --disable-libraries \
-  --enable-libraries=""  # 确保不启用任何外部库
 
 ./configure \
   --cross-prefix="${HOST}-" \
@@ -453,6 +421,12 @@ EXTRA_CFG+=" --enable-encoder=pcm_s16le,copy"
   --pkg-config="${HOST_PKG_CONFIG_PATH}" \
   --enable-version3 \
   --arch="${TARGET_ARCH}" \
+  --disable-everything \
+  --enable-decoder=aac,mp3 \
+  --enable-demuxer=aac,mp3,concat \
+  --enable-parser=aac,mp3,subrip \
+  --enable-protocol=file \
+  --enable-bsf=aac_adtstoasc \
   --cpu="${TARGET_CPU}" \
   --target-os=android \
   ${ASM_OPTIONS} \
