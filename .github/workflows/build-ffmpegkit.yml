@@ -30,12 +30,16 @@ jobs:
 
       - name: Build FFmpegKit AAR
         run:
-          bash android.sh \
-              --enable-libmp3lame \     # 启用 MP3 编码
-              --enable-demuxer=matroska,mov \  # 启用 MKV 和 MP4 解封装
-              --enable-decoder=subrip,ass \    # 启用字幕解码
-              --disable-arm-v7a \       # 按需禁用不支持的架构
-              --disable-x86
+          bash ./android.sh --enable-gpl --enable-libmp3lame --disable-everything \
+            --enable-demuxer=mov,matroska \
+            --enable-muxer=mp3 \
+            --enable-decoder=aac,mp3 \
+            --enable-encoder=libmp3lame \
+            --enable-parser=aac,mp3 \
+            --enable-protocol=file \
+            --enable-filter=aresample \
+            --enable-subtitle-decoder=mov_text,ass,subrip
+          
         
       - name: Upload AAR artifact
         uses: actions/upload-artifact@v4
