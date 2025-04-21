@@ -421,6 +421,17 @@ fi
   --pkg-config="${HOST_PKG_CONFIG_PATH}" \
   --enable-version3 \
   --arch="${TARGET_ARCH}" \
+  --enable-gpl \
+  --enable-libmp3lame \
+  --disable-everything \
+  --enable-demuxer=mov,matroska \
+  --enable-muxer=mp3 \
+  --enable-decoder=aac,mp3 \
+  --enable-encoder=libmp3lame \
+  --enable-parser=aac,mp3 \
+  --enable-protocol=file \
+  --enable-filter=aresample \
+  --enable-subtitle-decoder=mov_text,ass,subrip
   --cpu="${TARGET_CPU}" \
   --target-os=android \
   ${ASM_OPTIONS} \
