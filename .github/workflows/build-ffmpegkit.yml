@@ -24,8 +24,10 @@ jobs:
 
       - name: Build FFmpegKit AAR
         run: |
+          export ANDROID_NDK_ROOT="${{ steps.setup-ndk.outputs.ndk-path }}"
           cd ffmpeg-kit-myvideo
-          bash android.sh --ffmpeg-extra-config="$EXTRA_CFG" --disable-libraries --enable-libraries=""
+          bash android.sh --ffmpeg-extra-config="$EXTRA_CFG" \
+                          --disable-libraries --enable-libraries=""
 
       - name: Upload AAR artifact
         uses: actions/upload-artifact@v3
