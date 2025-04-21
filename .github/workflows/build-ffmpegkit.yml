@@ -9,7 +9,7 @@ jobs:
   build-android-aar:
     runs-on: ubuntu-latest
     env:
-      ANDROID_SDK_ROOT: /usr/local/lib/android/sdk  # 声明 SDK 根目录
+      ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
 
     steps:
       - name: Checkout code
