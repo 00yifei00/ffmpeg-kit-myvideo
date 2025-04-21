@@ -421,12 +421,6 @@ fi
   --pkg-config="${HOST_PKG_CONFIG_PATH}" \
   --enable-version3 \
   --arch="${TARGET_ARCH}" \
-  --disable-everything \
-  --enable-decoder=aac,mp3 \
-  --enable-demuxer=aac,mp3,concat \
-  --enable-parser=aac,mp3,subrip \
-  --enable-protocol=file \
-  --enable-bsf=aac_adtstoasc \
   --cpu="${TARGET_CPU}" \
   --target-os=android \
   ${ASM_OPTIONS} \
